@@ -1,0 +1,33 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <locale.h> 
+#define MAX_COUNT 100 
+
+typedef struct { 
+char surname[20]; 
+char name[20]; 
+int goals;
+} Soccer; 
+
+int main(){ 
+setlocale(LC_ALL,"Russian");
+Soccer soccer_player[MAX_COUNT] = {"\0", "\0", 0}, sorted[MAX_COUNT] = {"\0","\0", 0};
+ FILE* fin = fopen("input.txt","r");
+ for (int i = 0; i < MAX_COUNT; i++){//ввод данных 
+fscanf(fin,"%s %s %d",soccer_player[i].surname, soccer_player[i].name, &soccer_player[i].goals);
+ } 
+
+for(int i = 0; i < MAX_COUNT; i++){//сортировка по алфавиту 
+for(int j = 0; j < MAX_COUNT - 1; j++){ 
+if(strcmp(soccer_player[j].surname, soccer_player[j+1].surname)>0){//Сравнение фамилий 
+Soccer tmp = soccer_player[j]; 
+soccer_player[j] = soccer_player[j+1];
+soccer_player[j+1] = tmp; 
+} 
+if(strcmp(soccer_player[j].surname, soccer_player[j+1].surname) == 0){//Если фамилии одинаковые то сравниваются имена 
+if(strcmp(soccer_player[j].name, soccer_player[j+1].name)>0){ Soccer tmp = soccer_player[j]; soccer_player[j] = soccer_player[j+1]; soccer_player[j+1] = tmp; } } } } 
+for(int i = 0; i < MAX_COUNT; i++){ //Вывод 
+if (soccer_player[i].goals) printf("%s %s\n", soccer_player[i].surname, soccer_player[i].name);
+ } 
+return 0; 
+}
